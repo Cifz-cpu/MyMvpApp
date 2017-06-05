@@ -28,23 +28,15 @@ public class RxHelper {
         if (time < 0) time = 0;
 
         final int countTime = time;
-//        return Observable.interval(0, 1, TimeUnit.SECONDS)
-//                .subscribeOn(Schedulers.newThread())
-//                .map(new Func1<Long, Integer>() {
-//                    @Override
-//                    public Integer call(Long increaseTime) {
-//                        return countTime - increaseTime.intValue();
-//                    }
-//                })
-//                .take(countTime + 1);
         return Observable.interval(0,1,TimeUnit.SECONDS)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .take(countTime+1)
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<Long, Integer>() {
                     @Override
                     public Integer apply(@NonNull Long aLong) throws Exception {
                         return countTime - aLong.intValue();
                     }
-                })
-                .take(countTime+1);
+                });
+
     }
 }

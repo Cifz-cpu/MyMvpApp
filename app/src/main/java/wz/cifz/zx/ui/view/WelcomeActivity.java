@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import org.reactivestreams.Subscriber;
+
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -20,6 +22,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import wz.cifz.zx.R;
 import wz.cifz.zx.customView.SimpleButton;
+import wz.cifz.zx.utils.RxHelper;
 
 /**
  * desc
@@ -42,16 +45,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         final int count = 5;
 
-
-        Observable.interval(0,1, TimeUnit.SECONDS)
-                .take(count+1)
-                .map(new Function<Long, Integer>() {
-                    @Override
-                    public Integer apply(@NonNull Long aLong) throws Exception {
-                        return count - aLong.intValue();
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
+        RxHelper
+                .countdown(5)
                 .subscribe(new Observer<Integer>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -60,8 +55,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(@NonNull Integer integer) {
-                        Log.e("safdsafs",integer+"");
-                        sbSkip.setText("跳过"+integer);
+                        sbSkip.setText("跳过" + integer);
                     }
 
                     @Override
@@ -74,7 +68,6 @@ public class WelcomeActivity extends AppCompatActivity {
                         _doSkip();
                     }
                 });
-
 
 
     }
@@ -96,7 +89,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.sb_skip)
-    public void click(View v){
+    public void click(View v) {
         _doSkip();
     }
 
