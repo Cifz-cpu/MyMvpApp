@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.squareup.leakcanary.LeakCanary;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zxy.recovery.callback.RecoveryCallback;
 import com.zxy.recovery.core.Recovery;
@@ -53,6 +54,11 @@ public class MyApplication extends Application {
                 .init(this);
 
         super.onCreate();
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     /**

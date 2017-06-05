@@ -74,6 +74,10 @@ dependencies {
 
     compile 'com.zxy.android:recovery:0.0.3'
 
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+
 
 
 }
